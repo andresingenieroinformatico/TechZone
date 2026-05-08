@@ -59,16 +59,33 @@ class DatabaseSeeder extends Seeder
                 Product::factory(3)->create([
                     'seller_id' => $seller->id,
                     'category_id' => $category->id,
-                ])->each(function ($product) use ($customers) {
+                ])->each(function ($product) use ($customers, $category) {
+                    // Keywords for product images by category
+                    $keywords = [
+                        'Laptops' => ['laptop', 'notebook', 'macbook', 'computer'],
+                        'Smartphones' => ['smartphone', 'iphone', 'android', 'mobile'],
+                        'Tablets' => ['tablet', 'ipad', 'portable device'],
+                        'Audio' => ['headphones', 'earbuds', 'speaker', 'audio'],
+                        'Gaming' => ['gaming', 'console', 'controller', 'playstation'],
+                        'Componentes' => ['cpu', 'gpu', 'motherboard', 'hardware'],
+                    ];
+                    
+                    $keywords_list = $keywords[$category->name] ?? ['technology'];
+                    
                     // Images
-                    ProductImage::factory()->create([
+                    ProductImage::create([
                         'product_id' => $product->id,
+                        'path' => 'https://source.unsplash.com/800x600?'. $keywords_list[0] . ',tech&t=' . rand(1, 10000),
                         'is_primary' => true,
                     ]);
-                    ProductImage::factory(2)->create([
-                        'product_id' => $product->id,
-                        'is_primary' => false,
-                    ]);
+                    
+                    for ($i = 0; $i < 2; $i++) {
+                        ProductImage::create([
+                            'product_id' => $product->id,
+                            'path' => 'https://source.unsplash.com/800x600?' . $keywords_list[$i % count($keywords_list)] . ',electronics&t=' . rand(10001, 20000),
+                            'is_primary' => false,
+                        ]);
+                    }
 
                     // Reviews
                     Review::factory(rand(1, 5))->create([
