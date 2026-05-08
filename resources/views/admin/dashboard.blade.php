@@ -63,7 +63,7 @@
                                     <p class="text-xs text-gray-500">Stock: {{ $product->stock }} unidades</p>
                                 </div>
                                 <div class="w-24 bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
-                                    <div class="bg-red-500 h-1.5 rounded-full" style="width: {{ max(10, $product->stock) }}%"></div>
+                                    <div class="bg-red-500 h-1.5 rounded-full" style="width: {{ max(10, (int)$product->stock) }}%"></div>
                                 </div>
                             </div>
                         @endforeach
@@ -76,15 +76,18 @@
         </div>
     </div>
 
-    <!-- Chart.js -->
+    <div id="chart-data" 
+         data-labels='@json($salesData->pluck("month"))'
+         data-values='@json($salesData->pluck("aggregate"))'
+         class="hidden"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const chartDataEl = document.getElementById('chart-data');
+            const labels = JSON.parse(chartDataEl.dataset.labels);
+            const data = JSON.parse(chartDataEl.dataset.values);
             const ctx = document.getElementById('salesChart').getContext('2d');
-            
-            // Prepare data from PHP
-            const labels = @json($salesData->pluck('month'));
-            const data = @json($salesData->pluck('aggregate'));
 
             new Chart(ctx, {
                 type: 'line',
