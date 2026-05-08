@@ -14,8 +14,11 @@ class ProductController extends Controller
             ->where('status', 'active');
 
         // Search
-        if ($request->filled('q')) {
-            $query->where('name', 'like', '%' . $request->q . '%');
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
         }
 
         // Category Filter
