@@ -62,12 +62,12 @@ class DatabaseSeeder extends Seeder
                 ])->each(function ($product) use ($customers, $category) {
                     // Image configurations by category with specific colors and themes
                     $categoryConfig = [
-                        'Laptops' => ['bg' => '4F46E5', 'text' => 'FFFFFF', 'emoji' => '💻'],
-                        'Smartphones' => ['bg' => '06B6D4', 'text' => 'FFFFFF', 'emoji' => '📱'],
-                        'Tablets' => ['bg' => '8B5CF6', 'text' => 'FFFFFF', 'emoji' => '📲'],
-                        'Audio' => ['bg' => 'EC4899', 'text' => 'FFFFFF', 'emoji' => '🎧'],
-                        'Gaming' => ['bg' => '22C55E', 'text' => 'FFFFFF', 'emoji' => '🎮'],
-                        'Componentes' => ['bg' => 'F59E0B', 'text' => 'FFFFFF', 'emoji' => '⚙️'],
+                        'Laptops' => ['bg' => '4F46E5', 'text' => 'FFFFFF', 'label' => 'Laptop'],
+                        'Smartphones' => ['bg' => '06B6D4', 'text' => 'FFFFFF', 'label' => 'Smartphone'],
+                        'Tablets' => ['bg' => '8B5CF6', 'text' => 'FFFFFF', 'label' => 'Tablet'],
+                        'Audio' => ['bg' => 'EC4899', 'text' => 'FFFFFF', 'label' => 'Audio'],
+                        'Gaming' => ['bg' => '22C55E', 'text' => 'FFFFFF', 'label' => 'Gaming'],
+                        'Componentes' => ['bg' => 'F59E0B', 'text' => 'FFFFFF', 'label' => 'Componente'],
                     ];
                     
                     $config = $categoryConfig[$category->name] ?? $categoryConfig['Componentes'];
@@ -75,9 +75,9 @@ class DatabaseSeeder extends Seeder
                     // Generate image URLs with custom styling
                     $imageNum = rand(1, 3);
                     $images = [
-                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['emoji']}+{$category->name}+1",
-                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['emoji']}+{$category->name}+2",
-                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['emoji']}+{$category->name}+3",
+                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['label']}+{$imageNum}",
+                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['label']}+" . ($imageNum + 1),
+                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['label']}+" . ($imageNum + 2),
                     ];
                     
                     // Primary Image
