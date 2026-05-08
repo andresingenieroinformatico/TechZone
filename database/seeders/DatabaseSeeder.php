@@ -35,11 +35,27 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Categories
-        $categories = Category::factory(10)->create();
+        $categories = [
+            ['name' => 'Laptops', 'description' => 'Computadoras portátiles de última generación'],
+            ['name' => 'Smartphones', 'description' => 'Teléfonos inteligentes y accesorios móviles'],
+            ['name' => 'Tablets', 'description' => 'Tabletas y dispositivos portátiles'],
+            ['name' => 'Audio', 'description' => 'Auriculares, parlantes y sistemas de sonido'],
+            ['name' => 'Gaming', 'description' => 'Consolas, controles y accesorios gaming'],
+            ['name' => 'Componentes', 'description' => 'Piezas y componentes para computadoras'],
+        ];
+        
+        $categoryModels = collect($categories)->map(function ($cat) {
+            return Category::create([
+                'name' => $cat['name'],
+                'slug' => str($cat['name'])->slug(),
+                'description' => $cat['description'],
+                'image' => 'https://picsum.photos/400/300?random=' . rand(1, 100),
+            ]);
+        });
 
         // Products for each seller
         foreach ($sellers as $seller) {
-            foreach ($categories->random(3) as $category) {
+            foreach ($categoryModels->random(3) as $category) {
                 Product::factory(3)->create([
                     'seller_id' => $seller->id,
                     'category_id' => $category->id,

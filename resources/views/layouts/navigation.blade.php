@@ -75,14 +75,14 @@
         </div>
 
         <!-- Secondary Row (Mercado Libre Style with Gaps) -->
-        <div class="hidden sm:flex items-center h-10 text-xs font-medium text-[#333] gap-x-6 overflow-x-auto whitespace-nowrap scrollbar-hide">
-            <a href="{{ route('products.index') }}" class="hover:border-b-2 border-[#3483fa] pb-1 transition-all">Categorías</a>
-            <a href="#" class="hover:border-b-2 border-[#3483fa] pb-1 transition-all">Ofertas</a>
-            <a href="#" class="hover:border-b-2 border-[#3483fa] pb-1 transition-all">Historial</a>
-            <a href="#" class="hover:border-b-2 border-[#3483fa] pb-1 transition-all">Supermercado</a>
-            <a href="#" class="hover:border-b-2 border-[#3483fa] pb-1 transition-all">Moda</a>
-            <a href="#" class="hover:border-b-2 border-[#3483fa] pb-1 transition-all">Vender</a>
-            <a href="#" class="hover:border-b-2 border-[#3483fa] pb-1 transition-all">Ayuda</a>
+        <div class="hidden sm:flex items-center h-10 text-xs font-medium text-[#333] overflow-x-auto whitespace-nowrap scrollbar-hide">
+            <a href="{{ route('products.index') }}" class="px-6 hover:border-b-2 border-[#3483fa] pb-1 transition-all">Categorías</a>
+            <a href="#" class="px-6 hover:border-b-2 border-[#3483fa] pb-1 transition-all">Ofertas</a>
+            <a href="#" class="px-6 hover:border-b-2 border-[#3483fa] pb-1 transition-all">Historial</a>
+            <a href="#" class="px-6 hover:border-b-2 border-[#3483fa] pb-1 transition-all">Supermercado</a>
+            <a href="#" class="px-6 hover:border-b-2 border-[#3483fa] pb-1 transition-all">Moda</a>
+            <a href="#" class="px-6 hover:border-b-2 border-[#3483fa] pb-1 transition-all">Vender</a>
+            <a href="#" class="px-6 hover:border-b-2 border-[#3483fa] pb-1 transition-all">Ayuda</a>
         </div>
     </div>
 

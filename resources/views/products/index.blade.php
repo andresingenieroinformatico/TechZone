@@ -31,7 +31,7 @@
                                 <span class="text-gray-400">-</span>
                                 <input type="number" name="max_price" placeholder="Max" value="{{ request('max_price') }}" class="w-full rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 text-sm">
                             </div>
-                            <button type="submit" class="w-full btn-primary text-sm py-2">Filtrar</button>
+                            <button type="submit" class="w-full bg-[#3483fa] hover:bg-[#2968c8] text-white font-semibold rounded-lg transition-colors duration-200 text-sm py-2">Filtrar</button>
                         </form>
                     </div>
                 </aside>
@@ -106,7 +106,7 @@
                                                 @csrf
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <input type="hidden" name="quantity" value="1">
-                                                <button type="submit" class="p-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-300 shadow-md shadow-blue-500/20">
+                                                <button type="submit" class="p-2.5 bg-[#3483fa] text-white rounded-xl hover:bg-[#2968c8] transition-all duration-300 shadow-md shadow-[#3483fa]/20">
                                                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                                     </svg>
