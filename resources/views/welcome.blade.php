@@ -11,32 +11,33 @@
 </head>
 <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900 overflow-x-hidden">
     <!-- Navbar -->
-    <nav class="glass sticky top-0 z-50 py-4">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
+    <nav class="bg-[#fff159] sticky top-0 z-50 py-3 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between gap-8">
             <a href="/" class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                <div class="w-10 h-10 bg-[#3483fa] rounded-lg flex items-center justify-center text-white">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 </div>
-                <span class="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">Tech<span class="text-blue-600">Zone</span></span>
+                <span class="text-2xl font-black text-[#333] tracking-tighter">Tech<span class="text-[#3483fa]">Zone</span></span>
             </a>
 
-            <div class="hidden md:flex flex-1 max-w-xl mx-12">
-                <form action="{{ route('products.index') }}" method="GET" class="w-full relative group">
-                    <input type="text" name="search" placeholder="Busca productos, marcas y más..." class="w-full bg-gray-100 dark:bg-gray-800 border-none rounded-2xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-blue-600 transition-all outline-none">
-                    <svg class="w-5 h-5 text-gray-400 absolute left-4 top-3.5 group-focus-within:text-blue-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <div class="hidden md:flex flex-1 max-w-xl">
+                <form action="{{ route('products.index') }}" method="GET" class="w-full relative">
+                    <input type="text" name="search" placeholder="Busca productos, marcas y más..." class="w-full bg-white border-none rounded shadow-sm py-2 px-4 focus:ring-0 outline-none text-sm placeholder-gray-400">
+                    <button type="submit" class="absolute right-0 top-0 h-full px-4 text-gray-400 border-l border-gray-100 hover:text-[#3483fa] transition-colors">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    </button>
                 </form>
             </div>
 
             <div class="flex items-center gap-6">
                 @auth
-                    <a href="{{ route('cart.index') }}" class="relative text-gray-600 dark:text-gray-400 hover:text-blue-600 transition-colors">
+                    <a href="{{ route('cart.index') }}" class="relative text-[#333] hover:opacity-70 transition-opacity">
                         <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                        <span class="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-900">0</span>
                     </a>
-                    <a href="{{ route('dashboard') }}" class="btn-primary py-2 px-4 text-sm">Mi Cuenta</a>
+                    <a href="{{ route('dashboard') }}" class="text-[#333] font-bold text-sm">Mi Cuenta</a>
                 @else
-                    <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-blue-600">Iniciar Sesión</a>
-                    <a href="{{ route('register') }}" class="btn-primary py-2 px-6 text-sm">Registrarse</a>
+                    <a href="{{ route('register') }}" class="text-sm font-medium text-[#333] hover:opacity-70">Crea tu cuenta</a>
+                    <a href="{{ route('login') }}" class="text-sm font-medium text-[#333] hover:opacity-70">Ingresa</a>
                 @endauth
             </div>
         </div>
