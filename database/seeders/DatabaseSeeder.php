@@ -60,6 +60,24 @@ class DatabaseSeeder extends Seeder
                     'seller_id' => $seller->id,
                     'category_id' => $category->id,
                 ])->each(function ($product) use ($customers, $category) {
+                    $productNames = [
+                        'Laptops' => ['Laptop Pro 14', 'Ultrabook Air 15', 'Laptop Gamer RTX'],
+                        'Smartphones' => ['Smartphone Nova X', 'Smartphone Pixel Max', 'Smartphone Galaxy Edge'],
+                        'Tablets' => ['Tablet Studio 11', 'Tablet Mini Plus', 'Tablet Pro 12'],
+                        'Audio' => ['Audifonos Bluetooth Pro', 'Parlante Portatil Max', 'Soundbar Cinema 2.1'],
+                        'Gaming' => ['Consola Next Play', 'Control Inalambrico Pro', 'Teclado Mecanico RGB'],
+                        'Componentes' => ['SSD NVMe 1TB', 'Tarjeta Grafica RX', 'Memoria RAM 32GB'],
+                    ];
+
+                    $names = $productNames[$category->name] ?? $productNames['Componentes'];
+                    $name = $names[($product->id - 1) % count($names)];
+
+                    $product->update([
+                        'name' => $name,
+                        'slug' => str($name . ' ' . $product->id)->slug(),
+                        'description' => "Producto destacado de la categoria {$category->name}, ideal para renovar tu setup con buen rendimiento y garantia.",
+                    ]);
+
                     // Image configurations by category with specific colors and themes
                     $categoryConfig = [
                         'Laptops' => ['bg' => '4F46E5', 'text' => 'FFFFFF', 'label' => 'Laptop'],
