@@ -1,7 +1,19 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-12">Tu Carrito de Compras</h1>
+            <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-6">Tu Carrito de Compras</h1>
+
+            @if(session('success'))
+                <div class="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-semibold text-green-700">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                    {{ session('error') }}
+                </div>
+            @endif
 
             @if($cartItems->isEmpty())
                 <div class="bg-white dark:bg-gray-800 rounded-3xl p-16 text-center shadow-xl border border-gray-100 dark:border-gray-700">
@@ -19,28 +31,35 @@
                     <!-- Cart Items -->
                     <div class="flex-1 space-y-6">
                         @foreach($cartItems as $item)
-                            <div class="premium-card flex flex-col sm:flex-row gap-6 p-6">
+                            <div class="premium-card flex flex-col sm:flex-row gap-6 p-5 sm:p-6">
                                 <div class="w-full sm:w-32 aspect-square rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-900 shadow-inner">
                                     <img src="{{ $item->product->primaryImage ? $item->product->primaryImage->path : 'https://placehold.co/200x200' }}" alt="{{ $item->product->name }}" class="w-full h-full object-contain p-2">
                                 </div>
                                 <div class="flex-1 flex flex-col justify-between">
                                     <div>
-                                        <div class="flex justify-between items-start mb-1">
-                                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ $item->product->name }}</h3>
-                                            <p class="text-xl font-black text-gray-900 dark:text-white">${{ number_format($item->product->price * $item->quantity, 2) }}</p>
+                                        <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between mb-1">
+                                            <div>
+                                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ $item->product->name }}</h3>
+                                                <p class="text-sm text-gray-500">{{ $item->product->category->name }}</p>
+                                            </div>
+                                            <div class="text-left sm:text-right">
+                                                <p class="text-xl font-black text-gray-900 dark:text-white">${{ number_format($item->product->price * $item->quantity, 2) }}</p>
+                                                <p class="text-xs font-semibold text-gray-500">${{ number_format($item->product->price, 2) }} c/u</p>
+                                            </div>
                                         </div>
-                                        <p class="text-sm text-gray-500 mb-4">{{ $item->product->category->name }}</p>
                                     </div>
-                                    <div class="flex items-center justify-between">
-                                        <form action="{{ route('cart.update', $item) }}" method="POST" class="flex items-center gap-2">
+                                    <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                                        <form action="{{ route('cart.update', $item) }}" method="POST" class="flex flex-wrap items-end gap-3">
                                             @csrf
                                             @method('PATCH')
-                                            <label class="text-xs font-bold text-gray-400 uppercase tracking-tighter">Cant.</label>
-                                            <select name="quantity" onchange="this.form.submit()" class="rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 text-sm py-1.5 px-3">
-                                                @for($i = 1; $i <= min($item->product->stock, 10); $i++)
-                                                    <option value="{{ $i }}" {{ $item->quantity == $i ? 'selected' : '' }}>{{ $i }}</option>
-                                                @endfor
-                                            </select>
+                                            <div>
+                                                <label for="quantity-{{ $item->id }}" class="mb-1 block text-xs font-bold uppercase text-gray-500">Cantidad</label>
+                                                <input id="quantity-{{ $item->id }}" type="number" name="quantity" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stock }}" class="h-11 w-24 rounded-lg border-gray-300 text-center text-sm font-bold dark:bg-gray-700 dark:border-gray-600">
+                                            </div>
+                                            <button type="submit" class="h-11 rounded-lg border border-[#3483fa] px-4 text-sm font-bold text-[#3483fa] transition-colors hover:bg-blue-50">
+                                                Actualizar
+                                            </button>
+                                            <span class="pb-3 text-xs font-medium text-gray-500">Stock disponible: {{ $item->product->stock }}</span>
                                         </form>
                                         <form action="{{ route('cart.destroy', $item) }}" method="POST">
                                             @csrf

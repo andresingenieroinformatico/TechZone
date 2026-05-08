@@ -46,15 +46,15 @@ class CheckoutController extends Controller
             return redirect()->route('products.index');
         }
 
+        foreach ($cartItems as $item) {
+            if ($item->product->stock < $item->quantity) {
+                return back()->with('error', 'El producto ' . $item->product->name . ' no tiene stock suficiente.');
+            }
+        }
+
         DB::beginTransaction();
 
         try {
-            foreach ($cartItems as $item) {
-                if ($item->product->stock < $item->quantity) {
-                    return back()->with('error', 'El producto ' . $item->product->name . ' no tiene stock suficiente.');
-                }
-            }
-
             $subtotal = $cartItems->sum(function($item) {
                 return $item->product->price * $item->quantity;
             });
