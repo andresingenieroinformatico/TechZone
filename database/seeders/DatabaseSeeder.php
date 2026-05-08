@@ -60,29 +60,38 @@ class DatabaseSeeder extends Seeder
                     'seller_id' => $seller->id,
                     'category_id' => $category->id,
                 ])->each(function ($product) use ($customers, $category) {
-                    // Keywords for product images by category
-                    $keywords = [
-                        'Laptops' => ['laptop', 'notebook', 'macbook', 'computer'],
-                        'Smartphones' => ['smartphone', 'iphone', 'android', 'mobile'],
-                        'Tablets' => ['tablet', 'ipad', 'portable device'],
-                        'Audio' => ['headphones', 'earbuds', 'speaker', 'audio'],
-                        'Gaming' => ['gaming', 'console', 'controller', 'playstation'],
-                        'Componentes' => ['cpu', 'gpu', 'motherboard', 'hardware'],
+                    // Image configurations by category with specific colors and themes
+                    $categoryConfig = [
+                        'Laptops' => ['bg' => '4F46E5', 'text' => 'FFFFFF', 'emoji' => '💻'],
+                        'Smartphones' => ['bg' => '06B6D4', 'text' => 'FFFFFF', 'emoji' => '📱'],
+                        'Tablets' => ['bg' => '8B5CF6', 'text' => 'FFFFFF', 'emoji' => '📲'],
+                        'Audio' => ['bg' => 'EC4899', 'text' => 'FFFFFF', 'emoji' => '🎧'],
+                        'Gaming' => ['bg' => '22C55E', 'text' => 'FFFFFF', 'emoji' => '🎮'],
+                        'Componentes' => ['bg' => 'F59E0B', 'text' => 'FFFFFF', 'emoji' => '⚙️'],
                     ];
                     
-                    $keywords_list = $keywords[$category->name] ?? ['technology'];
+                    $config = $categoryConfig[$category->name] ?? $categoryConfig['Componentes'];
                     
-                    // Images
+                    // Generate image URLs with custom styling
+                    $imageNum = rand(1, 3);
+                    $images = [
+                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['emoji']}+{$category->name}+1",
+                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['emoji']}+{$category->name}+2",
+                        "https://placehold.co/800x600/{$config['bg']}/{$config['text']}?text={$config['emoji']}+{$category->name}+3",
+                    ];
+                    
+                    // Primary Image
                     ProductImage::create([
                         'product_id' => $product->id,
-                        'path' => 'https://source.unsplash.com/800x600?'. $keywords_list[0] . ',tech&t=' . rand(1, 10000),
+                        'path' => $images[0],
                         'is_primary' => true,
                     ]);
                     
-                    for ($i = 0; $i < 2; $i++) {
+                    // Secondary Images
+                    for ($i = 1; $i < 3; $i++) {
                         ProductImage::create([
                             'product_id' => $product->id,
-                            'path' => 'https://source.unsplash.com/800x600?' . $keywords_list[$i % count($keywords_list)] . ',electronics&t=' . rand(10001, 20000),
+                            'path' => $images[$i % count($images)],
                             'is_primary' => false,
                         ]);
                     }
