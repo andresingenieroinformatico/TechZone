@@ -24,6 +24,14 @@ class DatabaseSeeder extends Seeder
             'role' => User::ROLE_ADMIN,
         ]);
 
+        // Test customer
+        $testCustomer = User::factory()->create([
+            'name' => 'Cliente TechZone',
+            'email' => 'cliente@techzone.com',
+            'password' => bcrypt('password'),
+            'role' => User::ROLE_CUSTOMER,
+        ]);
+
         // Sellers
         $sellers = User::factory(5)->create([
             'role' => User::ROLE_SELLER,
@@ -32,7 +40,7 @@ class DatabaseSeeder extends Seeder
         // Customers
         $customers = User::factory(10)->create([
             'role' => User::ROLE_CUSTOMER,
-        ]);
+        ])->push($testCustomer);
 
         // Categories
         $categories = [
