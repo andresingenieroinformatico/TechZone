@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -14,7 +15,10 @@ Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        if (auth()->user()->isAdmin()) return redirect()->route('admin.dashboard');
+        $user = Auth::user();
+        if ($user && $user->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
         return view('dashboard');
     })->name('dashboard');
 
