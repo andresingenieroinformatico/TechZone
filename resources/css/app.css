@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --primary: 37 99 235; /* Blue 600 */
+        --primary-hover: 29 78 216;
+        --secondary: 15 23 42; /* Slate 900 */
+        --accent: 245 158 11; /* Amber 500 */
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Outfit', sans-serif;
+    }
+}
+
+@layer components {
+    .premium-card {
+        @apply bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    }
+    
+    .btn-primary {
+        @apply px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 active:scale-95 shadow-lg shadow-blue-500/20;
+    }
+
+    .glass {
+        @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border border-white/20;
+    }
+}
