@@ -44,7 +44,13 @@ class CartController extends Controller
             ->first();
 
         if ($cartItem) {
-            $cartItem->quantity += $request->quantity;
+            $newQuantity = $cartItem->quantity + $request->quantity;
+
+            if ($product->stock < $newQuantity) {
+                return back()->with('error', 'No hay suficiente stock disponible para agregar mas unidades.');
+            }
+
+            $cartItem->quantity = $newQuantity;
             $cartItem->save();
         } else {
             CartItem::create([
@@ -62,6 +68,8 @@ class CartController extends Controller
         Gate::authorize('update', $cartItem);
 
         $request->validate(['quantity' => 'required|integer|min:1']);
+
+        $cartItem->loadMissing('product');
 
         if ($cartItem->product->stock < $request->quantity) {
             return back()->with('error', 'No hay suficiente stock.');
